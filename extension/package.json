@@ -1,0 +1,27 @@
+{
+	"name": "@host/extension",
+	"version": "0.0.1",
+	"type": "module",
+	"main": "dist/extension.umd.js",
+	"module": "dist/extension.es.js",
+	"types": "dist/src/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/src/index.d.ts",
+			"import": "./dist/extension.es.js",
+			"require": "./dist/extension.umd.js"
+		}
+	},
+	"scripts": {
+		"build": "vite build",
+		"dev": "vite build --watch"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"@host/host-types": "file:../host/src/libs/host-types",
+		"@host/dev": "file:../host/src/libs/light-runtime",
+		"@types/node": "^24.12.2",
+		"typescript": "~6.0.2",
+		"vite": "^8.0.4"
+	}
+}
