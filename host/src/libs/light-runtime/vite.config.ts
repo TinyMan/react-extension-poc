@@ -6,6 +6,7 @@ import cfg from "../../../vite.config.ts";
 const externalPackages = [
   ...Object.keys(pkg.dependencies ?? {}),
   ...Object.keys(pkg.devDependencies ?? {}),
+  ...((cfg.build?.rolldownOptions?.external as string[]) ?? []),
 ];
 
 const externalPackageId = (id: string) =>
@@ -18,7 +19,8 @@ export default defineConfig({
   build: {
     outDir: path.resolve(__dirname, "dist"),
     emptyOutDir: true,
-    rollupOptions: {
+    rolldownOptions: {
+      ...cfg.build?.rolldownOptions,
       external: externalPackageId,
     },
     manifest: true,

@@ -8,6 +8,7 @@
     "build": "vite build",
     "build:platform": "tsc --build src/libs/platform",
     "build:host-types": "tsc --build src/libs/host-types",
+    "build:light-runtime": "vite build --config src/libs/light-runtime/vite.config.ts",
     "api-extractor:host-types": "npm run build:host-types && api-extractor run --config src/libs/host-types/api-extractor.json --local --verbose",
     "lint": "eslint .",
     "preview": "vite preview",

@@ -14,9 +14,9 @@
 	},
 	"scripts": {
 		"build": "vite build",
-		"dev": "vite dev"
+		"dev": "vite dev",
+		"reinstall-host": "npm install ../host/host-host-types-0.0.1.tgz ../host/host-light-runtime-0.0.1.tgz --no-cache --force"
 	},
-	"dependencies": {},
 	"devDependencies": {
 		"@host/host-types": "file:../host/host-host-types-0.0.1.tgz",
 		"@host/light-runtime": "file:../host/host-light-runtime-0.0.1.tgz",
