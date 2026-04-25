@@ -10,7 +10,8 @@
     "build:host-types": "tsc --build src/libs/host-types",
     "api-extractor:host-types": "npm run build:host-types && api-extractor run --config src/libs/host-types/api-extractor.json --local --verbose",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "clean": "tsc --build --clean"
   },
   "dependencies": {
     "react": "^19.2.4",
