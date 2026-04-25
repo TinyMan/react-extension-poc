@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@host/platform": ["./src/libs/platform/src"],
+      "@host/host-types": ["./src/libs/host-types/src"]
+    }
+  }
+}

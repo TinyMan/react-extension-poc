@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "build:platform": "tsc -p src/libs/platform/tsconfig.lib.json",
-    "build:host-types": "tsc -p src/libs/host-types/tsconfig.lib.json",
+    "build:platform": "tsc --build src/libs/platform",
+    "build:host-types": "tsc --build src/libs/host-types",
     "api-extractor:host-types": "npm run build:host-types && api-extractor run --config src/libs/host-types/api-extractor.json --local --verbose",
     "lint": "eslint .",
     "preview": "vite preview"
