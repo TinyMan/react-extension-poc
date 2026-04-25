@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite dev",
     "build": "vite build",
-    "build:platform": "tsc -p libs/platform/tsconfig.lib.json",
-    "build:host-types": "tsc -p libs/host-types/tsconfig.lib.json",
-    "api-extractor:host-types": "api-extractor run --config libs/host-types/api-extractor.json --local --verbose",
+    "build:platform": "tsc -p src/libs/platform/tsconfig.lib.json",
+    "build:host-types": "tsc -p src/libs/host-types/tsconfig.lib.json",
+    "api-extractor:host-types": "npm run build:host-types && api-extractor run --config src/libs/host-types/api-extractor.json --local --verbose",
     "lint": "eslint .",
     "preview": "vite preview"
   },

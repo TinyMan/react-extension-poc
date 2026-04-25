@@ -1,5 +1,11 @@
-type MethodHandler = () => void | Promise<void>;
+/**
+ * @public
+ */
+export type MethodHandler = () => void | Promise<void>;
 
+/**
+ * @public
+ */
 export class MethodManager {
   private static instanceValue: MethodManager | null = null;
   private registry = new Map<string, MethodHandler>();

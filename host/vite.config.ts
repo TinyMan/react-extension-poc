@@ -8,8 +8,8 @@ export default defineConfig({
   plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
   resolve: {
     alias: {
-      "@host/platform": path.resolve(__dirname, "libs/platform/src"),
-      "@host/host-types": path.resolve(__dirname, "libs/host-types/src"),
+      "@host/platform": path.resolve(__dirname, "src/libs/platform/src"),
+      "@host/host-types": path.resolve(__dirname, "src/libs/host-types/src"),
     },
   },
   build: {
