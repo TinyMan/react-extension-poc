@@ -18,16 +18,8 @@
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"@host/host-types": "file:../host/src/libs/host-types",
-		"@host/dev": "file:../host/src/libs/light-runtime",
-		"@emotion/react": "^11.12.0",
-		"@emotion/styled": "^11.12.0",
-		"@mui/material": "^5.14.8",
-		"elkjs": "^0.9.0",
-		"highcharts": "^12.2.0",
-		"lodash-es": "^4.17.21",
-		"react": "^19.2.4",
-		"react-dom": "^19.2.4",
+		"@host/host-types": "file:../host/src/libs/host-types/host-host-types-0.0.1.tgz",
+		"@host/light-runtime": "file:../host/src/libs/light-runtime/host-light-runtime-0.0.2.tgz",
 		"@types/node": "^24.12.2",
 		"typescript": "~6.0.2",
 		"vite": "^8.0.4"
