@@ -14,12 +14,20 @@
 	},
 	"scripts": {
 		"build": "vite build",
-		"dev": "vite build --watch"
+		"dev": "vite dev"
 	},
 	"dependencies": {},
 	"devDependencies": {
 		"@host/host-types": "file:../host/src/libs/host-types",
 		"@host/dev": "file:../host/src/libs/light-runtime",
+		"@emotion/react": "^11.12.0",
+		"@emotion/styled": "^11.12.0",
+		"@mui/material": "^5.14.8",
+		"elkjs": "^0.9.0",
+		"highcharts": "^12.2.0",
+		"lodash-es": "^4.17.21",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
 		"@types/node": "^24.12.2",
 		"typescript": "~6.0.2",
 		"vite": "^8.0.4"
