@@ -18,8 +18,8 @@
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"@host/host-types": "file:../host/src/libs/host-types/host-host-types-0.0.1.tgz",
-		"@host/light-runtime": "file:../host/src/libs/light-runtime/host-light-runtime-0.0.2.tgz",
+		"@host/host-types": "file:../host/host-host-types-0.0.1.tgz",
+		"@host/light-runtime": "file:../host/host-light-runtime-0.0.1.tgz",
 		"@types/node": "^24.12.2",
 		"typescript": "~6.0.2",
 		"vite": "^8.0.4"

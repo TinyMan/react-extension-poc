@@ -2,5 +2,8 @@
 	"name": "@host/host-types",
 	"version": "0.0.1",
 	"private": false,
-	"types": "dist/host-types.public.d.ts"
+	"types": "dist/host-types.public.d.ts",
+	"files": [
+		"dist/host-types.public.d.ts"
+	]
 }

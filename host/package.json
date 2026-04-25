@@ -11,7 +11,8 @@
     "api-extractor:host-types": "npm run build:host-types && api-extractor run --config src/libs/host-types/api-extractor.json --local --verbose",
     "lint": "eslint .",
     "preview": "vite preview",
-    "clean": "tsc --build --clean"
+    "clean": "tsc --build --clean",
+    "pack": "npm pack src/libs/host-types && npm pack src/libs/light-runtime"
   },
   "dependencies": {
     "@emotion/react": "^11.12.0",
