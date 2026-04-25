@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import path from "path";
-import pkg from "./package.json" with { type: "json" };
+import pkg from "../../../package.json" with { type: "json" };
+import cfg from "../../../vite.config.ts";
 
 const externalPackages = [
   ...Object.keys(pkg.dependencies ?? {}),
@@ -13,14 +14,10 @@ const externalPackageId = (id: string) =>
   );
 
 export default defineConfig({
-  resolve: {
-    alias: {
-      "@host/platform": path.resolve(__dirname, "src/libs/platform/src"),
-      "@host/host-types": path.resolve(__dirname, "src/libs/host-types/src"),
-    },
-  },
+  ...cfg,
   build: {
-    outDir: "dist/light",
+    outDir: path.resolve(__dirname, "dist"),
+    emptyOutDir: true,
     rollupOptions: {
       external: externalPackageId,
     },

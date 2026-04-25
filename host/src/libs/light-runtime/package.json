@@ -1,0 +1,8 @@
+{
+	"name": "@host/light-runtime",
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"build": "vite build"
+	}
+}

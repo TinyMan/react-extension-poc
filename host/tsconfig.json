@@ -1,8 +1,6 @@
 {
   "files": [],
   "references": [
-    { "path": "./src/apps/host/tsconfig.json" },
-    // { "path": "./tsconfig.node.json" },
     { "path": "./src/libs/platform/tsconfig.json" },
     { "path": "./src/libs/host-types/tsconfig.json" }
   ]
