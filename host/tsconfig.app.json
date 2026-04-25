@@ -6,6 +6,12 @@
     "module": "esnext",
     "types": ["vite/client"],
     "skipLibCheck": true,
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "paths": {
+      "@host/platform": ["libs/platform/src"],
+      "@host/host-types": ["libs/host-types/src"]
+    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",

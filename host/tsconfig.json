@@ -1,7 +1,19 @@
 {
   "files": [],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "outDir": "dist",
+    "rootDir": ".",
+    "paths": {
+      "@host/platform": ["libs/platform/src"],
+      "@host/host-types": ["libs/host-types/src"]
+    }
+  },
   "references": [
     { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+    { "path": "./tsconfig.node.json" },
+    { "path": "./libs/platform/tsconfig.lib.json" },
+    { "path": "./libs/host-types/tsconfig.lib.json" }
   ]
 }

@@ -1,0 +1,28 @@
+{
+	"$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
+	"projectFolder": "../..",
+	"mainEntryPointFilePath": "<projectFolder>/dist/libs/host-types/src/index.d.ts",
+	"dtsRollup": {
+		"enabled": true,
+		"untrimmedFilePath": "<projectFolder>/dist/libs/host-types/host-types.untrimmed.d.ts",
+		"publicTrimmedFilePath": "<projectFolder>/dist/libs/host-types/host-types.d.ts"
+	},
+	"apiReport": {
+		"enabled": true
+	},
+	"docModel": {
+		"enabled": false
+	},
+	"compiler": {
+		"tsconfigFilePath": "tsconfig.lib.json",
+		"overrideTsconfig": {},
+		"skipLibCheck": true
+	},
+	"messages": {
+		"compilerMessageReporting": {
+			"default": {
+				"logLevel": "warning"
+			}
+		}
+	}
+}
