@@ -1,5 +1,6 @@
 {
 	"name": "@host/platform",
 	"version": "0.0.0",
-	"private": true
+	"private": true,
+	"types": "dist/src/index.d.ts"
 }
