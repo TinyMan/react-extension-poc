@@ -1,4 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { shuffle } from 'lodash-es'
+import * as Highcharts from 'highcharts'
+import Button from '@mui/material/Button'
+import ELK from 'elkjs/lib/elk.bundled.js'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
@@ -10,6 +14,26 @@ function App() {
   const [message, setMessage] = useState(
     'Bootstrap method will run on page load; click the button to invoke again.',
   )
+  const pocInfo = useMemo(() => {
+    try {
+      const shuffled = shuffle([1, 2, 3, 4, 5])
+      const highchartsVersion = (Highcharts as { version?: string }).version ?? 'unknown'
+      const elkStatus = typeof ELK === 'function' ? 'ELK imported' : 'ELK import failed'
+
+      return {
+        lodash: shuffled.join(', '),
+        highcharts: highchartsVersion,
+        elk: elkStatus,
+      }
+    } catch (error) {
+      console.error('POC imports failed:', error)
+      return {
+        lodash: '',
+        highcharts: 'unknown',
+        elk: 'POC import failed',
+      }
+    }
+  }, [])
 
   useEffect(() => {
     try {
@@ -52,6 +76,18 @@ function App() {
         <button className="counter" onClick={handleInvoke}>
           Invoke bootstrap method
         </button>
+        <Button
+          variant="contained"
+          onClick={() => setMessage('MUI button clicked')}
+          sx={{ marginTop: '1rem' }}
+        >
+          MUI Button
+        </Button>
+        <div style={{ marginTop: '1rem', textAlign: 'left' }}>
+          <p>Lodash shuffle: {pocInfo.lodash}</p>
+          <p>Highcharts version: {pocInfo.highcharts}</p>
+          <p>{pocInfo.elk}</p>
+        </div>
       </section>
 
       <div className="ticks"></div>
