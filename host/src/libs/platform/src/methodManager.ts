@@ -20,10 +20,12 @@ export class MethodManager {
   }
 
   public registerMethod(name: string, handler: MethodHandler) {
+    console.log(`Registering method: ${name}`);
     this.registry.set(name, handler);
   }
 
   public invokeMethod(name: string) {
+    console.log(`Invoking method: ${name}`);
     const handler = this.registry.get(name);
     if (!handler) {
       throw new Error(`No method registered under name: ${name}`);

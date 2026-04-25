@@ -15,4 +15,6 @@ export const createCustomMethod = (message: string): MethodHandler => {
   };
 };
 
-MethodManager.instance.registerMethod("extension.sampleMethod", sampleMethod);
+export function register() {
+  MethodManager.instance.registerMethod("bootstrap.hello", sampleMethod);
+}
