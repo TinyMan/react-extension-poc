@@ -1,6 +1,6 @@
 {
 	"$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
-	"projectFolder": "../..",
+	"projectFolder": "../../../",
 	"mainEntryPointFilePath": "<projectFolder>/dist/libs/host-types/src/index.d.ts",
 	"bundledPackages": [
 		"@host/platform"
