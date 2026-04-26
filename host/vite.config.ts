@@ -74,15 +74,18 @@ function HostDependencyManifestPlugin(): PluginOption {
     name: "host-dependency-manifest",
     apply: "build",
     generateBundle(_, bundle) {
-      // this.emitFile({
-      //   type: "asset",
-      //   fileName: "host-dependencies.json",
-      //   source: JSON.stringify(
-      //     bundle,
-      //     (k, v) => (k === "code" || k === "data" ? k : v),
-      //     2,
-      //   ),
-      // });
+      this.emitFile({
+        type: "asset",
+        fileName: "host-dependencies.json",
+        source: JSON.stringify(
+          bundle,
+          (k, v) =>
+            ["code", "data", "map", "viteMetadata", "source"].includes(k)
+              ? k
+              : v,
+          2,
+        ),
+      });
       // const index = Object.values(bundle).find(
       //   (m) => m.name === "index" && m.type === "chunk",
       // );
@@ -164,35 +167,41 @@ export default defineConfig({
   build: {
     outDir: outDir,
     emptyOutDir: true,
-    // manifest: true,
+    manifest: true,
     sourcemap: true,
     rolldownOptions: {
-      preserveEntrySignatures: "strict",
+      // preserveEntrySignatures: false,
+      // preserveEntrySignatures: "strict",
       input: {
         index: path.resolve(__dirname, "src/apps/host/index.html"),
-        ...sharedDependencies.reduce(
-          (acc, dep) => ({ ...acc, [dep]: dep }),
-          {},
-        ),
-        "elkjs/lib/elk.bundled.js": "elkjs/lib/elk.bundled.js",
+        // ...sharedDependencies.reduce(
+        //   (acc, dep) => ({ ...acc, [dep]: dep }),
+        //   {},
+        // ),
+        // "elkjs/lib/elk.bundled.js": "elkjs/lib/elk.bundled.js",
         "@host/host-types": path.resolve(
           __dirname,
           "src/libs/host-types/src/index.ts",
         ),
       },
       output: {
-        // codeSplitting: {
-        //   groups: [
-        //     {
-        //       name: (moduleId, _) => {
-        //         console.log(moduleId);
-        //         // console.log(ctx.getModuleInfo(moduleId));
-        //         return moduleId;
-        //       },
-        //       test: /node_modules/,
-        //     },
-        //   ],
-        // },
+        codeSplitting: {
+          groups: [
+            {
+              name: (moduleId, _) => {
+                console.log(moduleId);
+                // console.log(ctx.getModuleInfo(moduleId));
+                return (
+                  moduleId.match(
+                    /node_modules\/((@[^/]+\/[^/]+)|([^/]+))/,
+                  )?.[1] ?? "vendor"
+                );
+              },
+              test: /node_modules/,
+            },
+          ],
+        },
+        minifyInternalExports: false,
       },
       external: ["./extension.js"],
     },
