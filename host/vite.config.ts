@@ -4,13 +4,13 @@ import path from "path";
 
 import { exactRegex } from "@rolldown/pluginutils";
 
-export function PluginImportResolver(): PluginOption {
+export function ExtensionImportResolver(): PluginOption {
   const virtualModuleId = "virtual:extension";
   const resolvedVirtualModuleId = "\0" + virtualModuleId;
 
   return {
-    name: "my-plugin", // required, will show up in warnings and errors
-    apply: "serve", // only apply during dev, not build
+    name: "extension-import-resolver",
+    apply: "serve",
     resolveId: {
       filter: { id: exactRegex(virtualModuleId) },
       handler() {
@@ -29,10 +29,7 @@ export function PluginImportResolver(): PluginOption {
 // https://vite.dev/config/
 export default defineConfig({
   root: path.resolve(__dirname, "src/apps/host"),
-  plugins: [
-    react(),
-    // PluginImportResolver(),
-  ],
+  plugins: [react(), ExtensionImportResolver()],
   resolve: {
     tsconfigPaths: true,
   },

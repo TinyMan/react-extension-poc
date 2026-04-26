@@ -1,7 +1,7 @@
 /**
  * @public
  */
-export type MethodHandler = () => void | Promise<void>;
+export type MethodHandler = () => unknown | Promise<unknown>;
 
 /**
  * @public

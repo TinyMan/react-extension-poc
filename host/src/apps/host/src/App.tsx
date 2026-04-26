@@ -9,11 +9,22 @@ import heroImg from './assets/hero.png'
 import './App.css'
 import { methodManager } from '@host/platform'
 
+type SharedDepsCheckResult = {
+  results: Array<{
+    packageName: string
+    actualVersion: string
+    expectedVersion: string | null
+    matches: boolean
+  }>
+  message: string
+}
+
 function App() {
   const [count, setCount] = useState(0)
   const [message, setMessage] = useState(
     'Bootstrap method will run on page load; click the button to invoke again.',
   )
+  const [sharedDepsMessage, setSharedDepsMessage] = useState('')
   const pocInfo = useMemo(() => {
     try {
       const shuffled = shuffle([1, 2, 3, 4, 5])
@@ -52,6 +63,22 @@ function App() {
     }
   }
 
+  const handleCheckSharedDeps = async () => {
+    try {
+      const result = (await Promise.resolve(
+        methodManager.invokeMethod('extension.sharedDeps.check'),
+      )) as unknown as SharedDepsCheckResult
+
+      if (result?.results?.length) {
+        setSharedDepsMessage(result.message)
+      } else {
+        setSharedDepsMessage('Shared dependency check ran; see console logs for results.')
+      }
+    } catch (error) {
+      setSharedDepsMessage('Shared dependency check failed: ' + (error as Error).message)
+    }
+  }
+
   return (
     <>
       <section id="center">
@@ -76,6 +103,9 @@ function App() {
         <button className="counter" onClick={handleInvoke}>
           Invoke bootstrap method
         </button>
+        <button className="counter" onClick={handleCheckSharedDeps}>
+          Check shared extension deps
+        </button>
         <Button
           variant="contained"
           onClick={() => setMessage('MUI button clicked')}
@@ -87,6 +117,9 @@ function App() {
           <p>Lodash shuffle: {pocInfo.lodash}</p>
           <p>Highcharts version: {pocInfo.highcharts}</p>
           <p>{pocInfo.elk}</p>
+          <p style={{ marginTop: '1rem', fontWeight: '700' }}>
+            Shared dep check: {sharedDepsMessage || 'Not run yet'}
+          </p>
         </div>
       </section>
 
