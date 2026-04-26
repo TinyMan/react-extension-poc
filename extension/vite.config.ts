@@ -24,25 +24,6 @@ const hostRuntimeManifest = manifest as unknown as Record<
 const hostTypesAlias = Object.values(hostRuntimeManifest).find(
   (e) => e.name === "@host/host-types",
 )!.file;
-// const aliases = Object.values(
-//   manifest as unknown as Record<string, { name: string; file: string }>,
-// ).reduce(
-//   (acc, e, i, a) => {
-//     if (e.name === "@host/host-types") {
-//       return {
-//         ...acc,
-//         [e.name]: resolve(lightRuntimeStaticRoot, `./${e.file}`),
-//       };
-//     } else {
-//       return acc;
-//     }
-//   },
-//   {} as Record<string, string>,
-// );
-// console.log(
-//   "Generated aliases from manifest:",
-//   JSON.stringify(aliases, null, 2),
-// );
 
 function entryManifestPlugin(): PluginOption {
   return {
@@ -63,12 +44,66 @@ function entryManifestPlugin(): PluginOption {
       console.log("Entry chunks for manifest:", entries);
       this.emitFile({
         type: "asset",
-        fileName: "manifest.json", // or 'manifest.json'
+        fileName: "manifest.json",
         source: JSON.stringify(entries),
       });
     },
   };
 }
+
+function ServeExtensionPlugin(): PluginOption {
+  return {
+    name: "serve-extension",
+    apply: "serve",
+    config(config, env) {
+      if (env.command === "serve") {
+        config.server = config.server || {};
+        config.server.fs = config.server.fs || {};
+        config.server.fs.allow = [
+          ...(config.server.fs.allow || []),
+          resolve(__dirname, "src"),
+          lightRuntimeStaticRoot,
+        ];
+
+        config.resolve = config.resolve || {};
+        config.resolve.alias = {
+          ...(config.resolve.alias || {}),
+          "@host/host-types": resolve(
+            lightRuntimeStaticRoot,
+            `./${hostTypesAlias}`,
+          ),
+          "/extension/extension.js": resolve(__dirname, "src/extension.ts"),
+        };
+      }
+    },
+    configureServer(server) {
+      server.environments.client.moduleGraph.ensureEntryFromUrl(
+        "/extension/extension.js",
+      );
+
+      server.middlewares.use(async (req, res, next) => {
+        if (req.url === "/extension/manifest.json") {
+          res.setHeader("Content-Type", "application/json");
+          res.end(JSON.stringify([{ name: "index", file: "extension.js" }]));
+        } else if (req.url?.startsWith("/extension/extension.js")) {
+          console.log("Serving extension.js via custom middleware...");
+          // Transform and serve the module
+          const result = await server.environments.client.transformRequest(
+            "/extension/extension.js",
+          );
+          if (result) {
+            res.setHeader("Content-Type", "application/javascript");
+            res.end(result.code);
+            return;
+          }
+        } else {
+          next();
+        }
+      });
+    },
+  };
+}
+
 export default defineConfig({
   root: lightRuntimeStaticRoot,
   cacheDir: resolve(__dirname, "node_modules/.vite"),
@@ -77,57 +112,22 @@ export default defineConfig({
     visualizer({
       open: true,
     }),
+    ServeExtensionPlugin(),
   ],
   optimizeDeps: {
-    //     include: [
-    //       "react",
-    //       "react-dom",
-    //       "react/jsx-runtime",
-    //       "@mui/material/Button",
-    //       "lodash-es",
-    //       "highcharts",
-    //       "elkjs",
-    //       "@host/light-runtime",
-    //     ],
     exclude: ["@host/host-types"],
-  },
-  resolve: {
-    alias: {
-      "/extension.js": resolve(__dirname, "src/index.ts"),
-      // ...aliases,
-      "@host/host-types": resolve(
-        lightRuntimeStaticRoot,
-        `./${hostTypesAlias}`,
-      ),
-    },
-    // dedupe: [
-    //   "react",
-    //   "react-dom",
-    //   "react/jsx-runtime",
-    //   "@mui/material/Button",
-    //   "lodash-es",
-    //   "highcharts",
-    //   "elkjs",
-    // ],
   },
   build: {
     outDir: outDir,
     emptyOutDir: true,
     lib: {
-      entry: resolve(__dirname, "src/extension.ts"),
+      entry: { index: resolve(__dirname, "src/extension.ts") },
       fileName: "extension-[hash]",
       formats: ["es"],
     },
     sourcemap: true,
     rolldownOptions: {
       external: [...hostDependencies, "@host/host-types"],
-      // external(id, parent, isResolved) {
-      //   if (id.includes("host-types")) {
-      //     console.log("Evaluating external for:", id, parent, isResolved);
-      //   }
-
-      //   return hostDependencies.includes(id)
-      // },
     },
   },
 });

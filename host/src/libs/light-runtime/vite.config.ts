@@ -22,6 +22,13 @@ export default defineConfig({
     emptyOutDir: true,
     rolldownOptions: {
       ...cfg.build?.rolldownOptions,
+      input: {
+        index: path.resolve(__dirname, "../../apps/host/index.html"),
+        "@host/host-types": path.resolve(
+          __dirname,
+          "../host-types/src/index.ts",
+        ),
+      },
       external: externalPackageId,
       // output: {
       //   entryFileNames(chunkInfo): string {
