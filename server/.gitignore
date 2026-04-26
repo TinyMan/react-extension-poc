@@ -1,0 +1,55 @@
+# Bin and obj folders
+bin/
+obj/
+
+# .NET Core
+*.user
+*.suo
+*.cache
+*.log
+*.tmp
+*.temp
+
+# Visual Studio
+.vs/
+*.swp
+*.swo
+*~
+
+# Rider
+.idea/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# User-specific files
+*.user
+*.suo
+*.cache
+*.log
+*.tmp
+*.temp
+
+# Test results
+TestResults/
+
+# Publish
+publish/
+
+# Appsettings secrets
+appsettings.*.json
