@@ -2,16 +2,6 @@
 	"name": "@host/extension",
 	"version": "0.0.1",
 	"type": "module",
-	"main": "dist/extension.umd.js",
-	"module": "dist/extension.es.js",
-	"types": "dist/src/index.d.ts",
-	"exports": {
-		".": {
-			"types": "./dist/src/index.d.ts",
-			"import": "./dist/extension.es.js",
-			"require": "./dist/extension.umd.js"
-		}
-	},
 	"scripts": {
 		"build": "vite build",
 		"dev": "vite dev",
@@ -22,6 +12,7 @@
 		"@host/light-runtime": "file:../host/host-light-runtime-0.0.1.tgz",
 		"@types/lodash-es": "^4.17.12",
 		"@types/node": "^24.12.2",
+		"rollup-plugin-visualizer": "^7.0.1",
 		"typescript": "~6.0.2",
 		"vite": "^8.0.4"
 	}

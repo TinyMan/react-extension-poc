@@ -53,3 +53,4 @@ publish/
 
 # Appsettings secrets
 appsettings.*.json
+wwwroot

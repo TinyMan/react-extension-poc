@@ -5,7 +5,7 @@ var distPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), ".
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
-    WebRootPath = distPath
+    // WebRootPath = distPath
 });
 
 var app = builder.Build();

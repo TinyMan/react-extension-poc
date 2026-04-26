@@ -2,7 +2,7 @@ import type { MethodHandler } from "@host/host-types";
 import { MethodManager } from "@host/host-types";
 
 import React from "react";
-import Button from "@mui/material/Button";
+import { Button } from "@mui/material";
 import { shuffle } from "lodash-es";
 import ELK from "elkjs/lib/elk.bundled.js";
 
