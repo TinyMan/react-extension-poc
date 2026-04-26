@@ -103,6 +103,51 @@ function HostDependencyManifestPlugin(): PluginOption {
   };
 }
 
+function dynamicSharedEntriesPlugin(): PluginOption {
+  const emitted = new Set<string>();
+
+  function packageName(id: string) {
+    const m = id.match(/node_modules\/((@[^/]+\/[^/]+)|([^/]+))/);
+    return m?.[1] ?? null;
+  }
+
+  return {
+    name: "dynamic-shared-entries",
+    moduleParsed(info) {
+      for (const id of info.importedIds) {
+        const pkg = packageName(id);
+        if (!pkg || emitted.has(pkg)) continue;
+
+        emitted.add(pkg);
+        try {
+          this.emitFile({
+            type: "chunk",
+            id: pkg,
+            name: pkg,
+            preserveSignature: "exports-only",
+          });
+        } catch {
+          emitted.delete(pkg); // don't mark as emitted if it failed
+        }
+      }
+    },
+    generateBundle(_, bundle) {
+      // emit the shared manifest for extensions to consume
+      const shared: Record<string, string> = {};
+      for (const chunk of Object.values(bundle)) {
+        if (chunk.type !== "chunk") continue;
+        const pkg = [...emitted].find((p) => chunk.name === p);
+        if (pkg) shared[pkg] = chunk.fileName;
+      }
+      this.emitFile({
+        type: "asset",
+        fileName: "shared-manifest.json",
+        source: JSON.stringify(shared, null, 2),
+      });
+    },
+  };
+}
+
 // https://vite.dev/config/
 export default defineConfig({
   root: path.resolve(__dirname, "src/apps/host"),
@@ -111,6 +156,7 @@ export default defineConfig({
     ExtensionImportResolver(),
     HostDependencyManifestPlugin(),
     ImportMapPlugin(),
+    // dynamicSharedEntriesPlugin(),
   ],
   resolve: {
     tsconfigPaths: true,
